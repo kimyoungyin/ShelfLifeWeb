@@ -159,7 +159,7 @@ const Home = ({ addStart, storeCode, editMode }) => {
           >
             <TextField
               id="required"
-              label="판매제품등록"
+              label="진열가능 제품 등록"
               inputProps={{ className: classes.searchInput }}
               onChange={onChange}
               value={nweet}
