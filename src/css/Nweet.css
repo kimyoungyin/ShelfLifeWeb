@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.Nweet {
+  width: 90%;
+  max-width: 600px;
+  margin: 15px 0;
+  padding: 0 10px;
+  height: 100px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  word-break: break-all;
+
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  /* box-shadow: 4px 5px rgb(0 0 0 / 30%); */
+  border-radius: 3px;
+}
+
+.Nweet div {
+  width: 100%;
+}
+
+.add,
+.edit {
+  display: flex;
+  justify-content: space-around;
+}
+
+.form {
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.form div {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add div:first-child,
+.edit div:first-child {
+  width: 40%;
+}

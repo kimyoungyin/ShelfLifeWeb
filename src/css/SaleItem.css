@@ -1,0 +1,44 @@
+.SaleItem {
+  /* border: 1px solid rgb(168, 168, 168); */
+  height: 100px;
+  width: 90%;
+  max-width: 600px;
+  cursor: pointer;
+  font-size: 1em;
+  line-height: 1.5;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  word-break: break-all;
+  margin: 10px 0px;
+  padding: 0 10px;
+
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  border-radius: 3px;
+}
+
+.SaleItem div:first-of-type {
+  flex: 1;
+}
+
+.SaleItem .SaleItem-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+form {
+  display: flex;
+}
+
+form input {
+  text-align: center;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
