@@ -14,8 +14,14 @@
 
 .Profile-user {
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.4em;
   line-height: 1.5;
+  padding: 0 10px;
+}
+
+.Profile-user div:first-of-type,
+.Profile-user div:last-of-type {
+  margin-bottom: 20px;
 }
 
 .Profile-article {
@@ -23,7 +29,7 @@
   border-radius: 3px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   width: 90%;
-  margin: 40px auto 116px;
+  margin: 10px 0 116px;
   padding: 0 10px;
   line-height: 1.5;
   text-align: center;
@@ -40,6 +46,7 @@
 
 .Profile-step {
   background-color: #faf4c0;
+  border-radius: 3px;
   width: 80%;
   margin: 0 auto;
   padding: 10px;
@@ -63,4 +70,8 @@
 
 .Profile-buttons button {
   flex: 1;
+}
+
+.off {
+  display: none;
 }

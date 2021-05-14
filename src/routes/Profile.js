@@ -16,14 +16,27 @@ const Profile = ({ userObj }) => {
     localStorage.clear();
     history.push("/");
   };
+
+  const dropDown = () => {
+    const article = document.querySelector(".Profile-article");
+    const off = article.classList.contains("off");
+    if (off === false) {
+      article.classList.add("off");
+    } else {
+      article.classList.remove("off");
+    }
+  };
   return (
     <div className="Profile">
       <div className="Profile-user">
         <div>점주님, 알바생 모두 화이팅!</div>
         <div>사용중인 계정</div>
         <div>{userObj.email}</div>
+        <Button variant="contained" color="primary" onClick={dropDown}>
+          사용 가이드
+        </Button>
       </div>
-      <article className="Profile-article">
+      <article className="Profile-article off">
         <article>
           <h3 className="Profile-question">
             1. 진열가능한 제품을 새로 등록하기
