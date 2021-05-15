@@ -76,6 +76,10 @@
   flex: 1;
 }
 
+.Profile-emphasize {
+  color: red;
+}
+
 .off {
   display: none;
 }
