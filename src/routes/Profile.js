@@ -41,18 +41,16 @@ const Profile = ({ userObj }) => {
       </div>
       <article className="Profile-article off">
         <article>
-          <h3 className="Profile-question">
-            0. 왜 이 앱/웹을 만들게 되었나요?
-          </h3>
+          <h3 className="Profile-question">0. 왜 이 웹을 만들게 되었나요?</h3>
           <p className="Profile-step">
             저는 편의점 알바를 하는 편돌이인데, 진열기한(상미시간)을 종이로
             프린트해서 너무 번거롭게 관리하더라구요.. 고민 끝에 제가 직접
-            해결해보기로 다짐했고, 이 앱/웹을 만들게 되었습니다.
+            해결해보기로 다짐했고, 이 웹을 만들게 되었습니다.
           </p>
         </article>
         <article>
           <h3 className="Profile-question">
-            1. 이 웹/앱은 어떤 용도로 사용하면 좋을까요?
+            1. 이 웹은 어떤 용도로 사용하면 좋을까요?
           </h3>
           <p className="Profile-step">
             매장 내에서{" "}
@@ -68,7 +66,24 @@ const Profile = ({ userObj }) => {
         </article>
         <article>
           <h3 className="Profile-question">
-            2. 진열가능한 제품을 새로 등록하기
+            2. 이 웹은 "앱"처럼 사용하려면 어떻게 해야하나요?
+          </h3>
+          <p className="Profile-step">
+            이 웹은 <span className="Profile-emphasize">Chrome</span>
+            브라우저 환경을 기본으로 개발되었습니다.
+            <br />
+            1) 웹페이지에 접속
+            <br />
+            2) 오른쪽 위 크롬 메뉴(점 3개) 클릭
+            <br />
+            3) "홈 화면에 추가" 클릭
+            <br />
+            4)아이콘을 핸드폰 화면에 놓고 앱처럼 사용하기
+          </p>
+        </article>
+        <article>
+          <h3 className="Profile-question">
+            3. 진열가능한 제품을 새로 등록하기
           </h3>
           <p className="Profile-step">
             1) 진열가능 <br />
@@ -81,7 +96,7 @@ const Profile = ({ userObj }) => {
         </article>
         <article>
           <h3 className="Profile-question">
-            3. 진열가능한 제품 중 원하는 제품을 검색하기
+            4. 진열가능한 제품(2번) 중 원하는 제품을 검색하기
           </h3>
           <p className="Profile-step">
             1) 진열가능 <br />
@@ -92,7 +107,9 @@ const Profile = ({ userObj }) => {
           </p>
         </article>
         <article>
-          <h3 className="Profile-question">4. 진열가능한 제품을 수정하기</h3>
+          <h3 className="Profile-question">
+            5. 진열가능한 제품(2번)을 수정하기
+          </h3>
           <p className="Profile-step">
             1) 진열가능 <br />
             2) "수정하기" 버튼 클릭 <br />
@@ -105,7 +122,7 @@ const Profile = ({ userObj }) => {
         </article>
         <article>
           <h3 className="Profile-question">
-            5. 진열가능한 제품의 진열 시작하기
+            6. 진열가능한 제품(2번)의 진열 시작하기
           </h3>
           <p className="Profile-step">
             1) 진열가능 <br />
@@ -120,7 +137,7 @@ const Profile = ({ userObj }) => {
         </article>
         <article>
           <h3 className="Profile-question">
-            6. 진열중인 제품 제거(판매 혹은 폐기)하기
+            7. 진열중인 제품(5번) 제거(판매 혹은 폐기)하기
           </h3>
           <p className="Profile-step">
             1) 진열중 <br />
@@ -134,7 +151,7 @@ const Profile = ({ userObj }) => {
           </p>
         </article>
         <article>
-          <h3 className="Profile-question">7. 로그아웃</h3>
+          <h3 className="Profile-question">8. 로그아웃</h3>
           <p className="Profile-step">
             1) 내정보 <br />
             2) "로그아웃" 버튼 클릭 <br />
@@ -144,7 +161,7 @@ const Profile = ({ userObj }) => {
           </p>
         </article>
         <article>
-          <h3 className="Profile-question">8. 매장코드 변경</h3>
+          <h3 className="Profile-question">9. 매장코드 변경</h3>
           <p className="Profile-step">
             1) 내정보 <br />
             2) "다른 매장으로 접속" 버튼 클릭 <br />
