@@ -23,11 +23,6 @@
   padding: 10px;
 }
 
-.Profile-user div:first-of-type,
-.Profile-user div:last-of-type {
-  margin-bottom: 20px;
-}
-
 .Profile-article {
   background-color: white;
   border-radius: 3px;
@@ -82,4 +77,16 @@
 
 .off {
   display: none;
+}
+
+.Profile-border {
+  padding-top: 5px;
+  border-top: 1px dashed black;
+}
+
+.Profile-email,
+.Profile-code {
+  font-size: 15px;
+  color: gray;
+  margin: 10px 0;
 }
