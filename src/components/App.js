@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import AppRouter from "components/Router";
 import { authService } from "fbase";
+import { CircularProgress } from "@material-ui/core";
+import "../css/App.css";
 
 function App() {
   const [init, setInit] = useState(false);
@@ -27,7 +29,10 @@ function App() {
       {init ? (
         <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} />
       ) : (
-        "Initializing..."
+        <div id="App-loading">
+          <CircularProgress />
+          <div>개발자 : 케와와</div>
+        </div>
       )}
     </div>
   );
