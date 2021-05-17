@@ -29,6 +29,7 @@ const Navigation = () => {
     <BottomNavigation
       value={value}
       onChange={handleChange}
+      showLabels
       className={classes.root}
     >
       <BottomNavigationAction
