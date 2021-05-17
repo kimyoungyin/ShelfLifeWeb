@@ -6,12 +6,13 @@ import Navigation from "./Navigation";
 import Store from "../routes/Store";
 import OnSale from "routes/OnSale";
 import MenuBar from "./MenuBar";
+import "../css/Router.css";
 
 const AppRouter = ({ isLoggedIn, userObj }) => {
   return (
     <Router>
       <MenuBar />
-      <div style={{ marginTop: "10px" }}>
+      <div className="Router-switch">
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/">
