@@ -3,12 +3,10 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-/* .Store {
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-} */
+.Store {
+  display: flex;
+  flex-direction: column;
+}
 
 .Store-buttons {
   width: 100%;
@@ -18,4 +16,58 @@
 
 .Store-buttons button {
   flex: 1;
+}
+
+.Store-code {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  border-radius: 29px;
+  /* width: 90%; */
+  padding: 5px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Store-code input,
+.Store-code input:focus {
+  margin-left: 5px;
+  border: none;
+  outline: none;
+  text-align: start;
+}
+
+.Store-explain {
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  border-radius: 5px;
+  margin-top: 10px;
+  color: gray;
+  line-height: 1.5;
+}
+
+.Store-explain h3 {
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.Store-explain h3:last-of-type {
+  margin-top: 25px;
+}
+
+.Store-explain .Store-explain-title {
+  color: gray;
+  text-align: center;
+  font-size: 14px;
+}
+
+.Store-explain .Store-explain-warning {
+  color: red;
+  font-size: 12px;
 }

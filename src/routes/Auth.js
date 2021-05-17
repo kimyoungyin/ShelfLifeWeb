@@ -175,7 +175,7 @@ const Auth = () => {
           onClick={onSocialGithubClick}
         >
           <GitHubIcon />
-          깃허브 계정으로 시작하기
+          &nbsp; 깃허브 계정으로 시작하기
         </Button>
       </div>
     </div>

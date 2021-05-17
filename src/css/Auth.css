@@ -34,7 +34,7 @@ button {
 .Auth-submit {
   width: 100%;
   height: 40px;
-  background: rgb(100, 100, 100);
+  background: rgb(80, 79, 79);
   color: white;
   font-size: larger;
   border: none;
@@ -54,7 +54,7 @@ button {
 .Auth-toggle {
   border: none;
   border-radius: 5px;
-  background: #757ce8;
+  background: rgb(131, 131, 131);
   color: white;
   height: 30px;
 }
@@ -64,8 +64,4 @@ button {
   flex-direction: column;
   width: 100%;
   margin-top: 30px;
-}
-
-svg {
-  margin-right: 5px;
 }

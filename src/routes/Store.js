@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Home from "components/Home";
 import { dbService } from "fbase";
-import { Button, ButtonGroup } from "@material-ui/core";
+import { Button, ButtonGroup, Fab } from "@material-ui/core";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import "../css/Store.css";
 
 const Store = () => {
@@ -120,15 +121,46 @@ const Store = () => {
           )}
         </>
       ) : (
-        <form onSubmit={onSubmit}>
-          <input
-            value={storeCode}
-            onChange={onChange}
-            type="text"
-            placeholder="매장에서만 사용할 독특한 코드를 지정(혹은 선택)해주세요"
-          />
-          <input type="submit" value="제출" name="Store" />
-        </form>
+        <>
+          <form className="Store-code" onSubmit={onSubmit}>
+            <input
+              value={storeCode}
+              onChange={onChange}
+              type="text"
+              placeholder="매장코드"
+            />
+            {/* <input type="submit" value="제출" name="Store" /> */}
+            {/* <TextField
+              label="매장코드"
+              variant="outlined"
+              type="text"
+              required={true}
+              onChange={onChange}
+              value={storeCode}
+            /> */}
+            <Fab size="small" type="submit" color="secondary" aria-label="add">
+              <PlayArrowIcon />
+            </Fab>
+          </form>
+          <div className="Store-explain">
+            <h3 className="Store-explain-title">
+              입력된 매장코드는 아래 두 가지 중 한 가지를 수행하게 됩니다.
+            </h3>
+            <h3 className="Store-explain-warning">
+              주의 : 코드를 공유한 매장 직원 외 다른 사람이 접속하지 못하도록
+              복잡하게 설정해주세요
+              <br />
+              (예시: "매장명"(단순) / "gteg매장명sdfs(복잡)")
+            </h3>
+            <h3>1) 매장코드 새로 생성합니다.</h3>
+            매장 내에서 사용할 독특한 코드를 생성합니다. 직원들과 코드를
+            공유하세요
+            <br />
+            <h3>2) 이미 생성된 코드를 공유합니다.</h3>
+            공유된 매장코드로 접속합니다. 진열상품을 같은 매장 직원들과 공동으로
+            관리하세요
+          </div>
+        </>
       )}
     </div>
   );
