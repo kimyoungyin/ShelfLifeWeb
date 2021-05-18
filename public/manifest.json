@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "진열기한 관리 시스템",
+  "name": "진열기한 관리 시스템",
   "icons": [
     {
       "src": "favicon.ico",
