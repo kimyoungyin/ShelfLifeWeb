@@ -4,6 +4,7 @@ import { dbService } from "fbase";
 import { Button, ButtonGroup, Fab } from "@material-ui/core";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import "../css/Store.css";
+import IntegratedAdfitComponent from "components/Adfit";
 
 const Store = () => {
   const [storeCode, setStoreCode] = useState("");
@@ -159,6 +160,9 @@ const Store = () => {
             <h3>2) 공유된 매장코드로 접속합니다.</h3>
             진열상품을 같은 같은 코드로 접속하여, 매장 직원들과 공동으로
             진열기한을 관리하세요
+            <div className="Store-Adfit">
+              <IntegratedAdfitComponent />
+            </div>
           </div>
         </>
       )}

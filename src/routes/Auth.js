@@ -1,5 +1,6 @@
 import { Button, TextField } from "@material-ui/core";
 import GitHubIcon from "@material-ui/icons/GitHub";
+import IntegratedAdfitComponent from "components/Adfit";
 import { authService, firebaseInstance } from "fbase";
 import React, { useState } from "react";
 import "../css/Auth.css";
@@ -177,6 +178,9 @@ const Auth = () => {
           <GitHubIcon />
           &nbsp; 깃허브 계정으로 시작하기
         </Button>
+        <div className="Auth-Adfit">
+          <IntegratedAdfitComponent />
+        </div>
       </div>
     </div>
   );
