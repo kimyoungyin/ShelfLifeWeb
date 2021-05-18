@@ -35,6 +35,8 @@ const Profile = ({ userObj }) => {
           <br /> 자영업자분들 화이팅!
         </div>
         <div className="Profile-email">
+          <div>문의사항 : mafa1234@naver.com</div>
+          <br />
           <div>사용중인 계정</div>
           <div>{userObj.email}</div>
         </div>
