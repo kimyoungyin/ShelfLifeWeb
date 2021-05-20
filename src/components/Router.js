@@ -37,33 +37,6 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
     </Router>
   );
 
-  // return (
-  //   <Router className="Router">
-  //     <div className="Title">상미시간 관리 시스템</div>
-  //     <>
-  //       {isLoggedIn ? (
-  //         <Switch>
-  //           <Route exact path="/">
-  //             <Store />
-  //           </Route>
-  //           <Route path="/OnSale">
-  //             <OnSale />
-  //           </Route>
-  //           <Route exact path="/profile">
-  //             <Profile userObj={userObj} />
-  //           </Route>
-  //         </Switch>
-  //       ) : (
-  //         <Switch>
-  //           <Route exact path="/">
-  //             <Auth />
-  //           </Route>
-  //         </Switch>
-  //       )}
-  //     </>
-  //     {isLoggedIn && <Navigation />}
-  //   </Router>
-  // );
 };
 
 export default AppRouter;
