@@ -14,6 +14,8 @@ import "../css/Intro.css";
 import { Fab } from "@material-ui/core";
 
 const Intro = ({ introOut }) => {
+    const [gifImg, setGifImg] = useState(social);
+
     const gifList = [
         social,
         signup,
@@ -52,12 +54,14 @@ const Intro = ({ introOut }) => {
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const onClick = () => {
+    const onClick = async () => {
         setCurrentIndex(currentIndex + 1);
+        await setGifImg(gifList[currentIndex + 1]);
     };
 
-    const onBackClick = () => {
+    const onBackClick = async () => {
         setCurrentIndex(currentIndex - 1);
+        await setGifImg(gifList[currentIndex - 1]);
     };
 
     const filterBackButton = () => {
@@ -86,7 +90,7 @@ const Intro = ({ introOut }) => {
             <div className="Intro-main">
                 <div className="Intro-gifTitle">{gifTitle[currentIndex]}</div>
                 <img
-                    src={gifList[currentIndex]}
+                    src={gifImg}
                     alt={`${currentIndex}번 가이드`}
                     width="200px"
                 />
