@@ -1,0 +1,56 @@
+.Intro {
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Intro-main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+/* .Intro-forwardButton {
+    position: absolute;
+    right: 20px;
+}
+
+.Intro-backButton {
+    position: absolute;
+    left: 20px;
+} */
+
+.hidden {
+    visibility: hidden;
+}
+
+.Intro-gifTitle {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    text-align: center;
+    word-break: keep-all;
+}
+
+.Intro-gifText {
+    margin-top: 20px;
+    font-size: 0.8em;
+    line-height: 1.5;
+    word-break: keep-all;
+    text-align: center;
+}
+
+.Intro-out {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: gray;
+    text-decoration: underline;
+}

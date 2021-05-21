@@ -9,34 +9,33 @@ import MenuBar from "./MenuBar";
 import "../css/Router.css";
 
 const AppRouter = ({ isLoggedIn, userObj }) => {
-  return (
-    <Router>
-      <MenuBar />
-      <div className="Router-switch">
-        {isLoggedIn ? (
-          <Switch>
-            <Route exact path="/">
-              <Store />
-            </Route>
-            <Route path="/OnSale">
-              <OnSale />
-            </Route>
-            <Route exact path="/profile">
-              <Profile userObj={userObj} />
-            </Route>
-          </Switch>
-        ) : (
-          <Switch>
-            <Route exact path="/">
-              <Auth />
-            </Route>
-          </Switch>
-        )}
-      </div>
-      {isLoggedIn && <Navigation />}
-    </Router>
-  );
-
+    return (
+        <Router>
+            <MenuBar />
+            <div className="Router-switch">
+                {isLoggedIn ? (
+                    <Switch>
+                        <Route exact path="/">
+                            <Store />
+                        </Route>
+                        <Route path="/OnSale">
+                            <OnSale />
+                        </Route>
+                        <Route exact path="/profile">
+                            <Profile userObj={userObj} />
+                        </Route>
+                    </Switch>
+                ) : (
+                    <Switch>
+                        <Route exact path="/">
+                            <Auth />
+                        </Route>
+                    </Switch>
+                )}
+            </div>
+            {isLoggedIn && <Navigation />}
+        </Router>
+    );
 };
 
 export default AppRouter;
