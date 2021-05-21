@@ -33,7 +33,7 @@ function App() {
         return () => {
             setSawIntro(false);
         };
-    }, []);
+    }, [sawIntro]);
 
     const introOut = () => {
         setSawIntro(true);
