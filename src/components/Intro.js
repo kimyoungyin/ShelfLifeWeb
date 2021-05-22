@@ -54,13 +54,13 @@ const Intro = ({ introOut }) => {
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const onClick = async () => {
-        await setGifImg(gifList[currentIndex + 1]);
+    const onClick = () => {
+        setGifImg(gifList[currentIndex + 1]);
         setCurrentIndex(currentIndex + 1);
     };
 
-    const onBackClick = async () => {
-        await setGifImg(gifList[currentIndex - 1]);
+    const onBackClick = () => {
+        setGifImg(gifList[currentIndex - 1]);
         setCurrentIndex(currentIndex - 1);
     };
 
