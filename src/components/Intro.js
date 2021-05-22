@@ -55,13 +55,13 @@ const Intro = ({ introOut }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const onClick = async () => {
-        setCurrentIndex(currentIndex + 1);
         await setGifImg(gifList[currentIndex + 1]);
+        setCurrentIndex(currentIndex + 1);
     };
 
     const onBackClick = async () => {
-        setCurrentIndex(currentIndex - 1);
         await setGifImg(gifList[currentIndex - 1]);
+        setCurrentIndex(currentIndex - 1);
     };
 
     const filterBackButton = () => {
