@@ -4,7 +4,14 @@ import React, { useState } from "react";
 import Confirm from "./Confirm";
 import "../css/Nweet.css";
 
-const ReadyItem = ({ addStart, chickens, itemObj, storeCode, editMode }) => {
+const ReadyItem = ({
+    addStart,
+    chickens,
+    itemObj,
+    storeCode,
+    editMode,
+    onAddList,
+}) => {
     const [editing, setEditing] = useState(false);
     const [newItem, setNewItem] = useState(itemObj.text);
     const [count, setCount] = useState(0);
@@ -72,64 +79,24 @@ const ReadyItem = ({ addStart, chickens, itemObj, storeCode, editMode }) => {
 
     const toggleUpdate = () => setEditing((prev) => !prev);
 
-    const onSale = () => {
+    const addCountHandler = () => {
+        if (!addStart) return;
         setCount(count + 1);
-        if (addStart) {
-            try {
-                const currentLS = JSON.parse(localStorage.getItem("addList"));
-                const check = currentLS
-                    .map((obj) => Object.values(obj).includes(itemObj.text))
-                    .includes(true);
-                setLS(currentLS, check);
-            } catch (e) {
-                const currentLS = JSON.parse(localStorage.getItem("addList"));
-                const check = false;
-                setLS(currentLS, check);
-            }
-        }
-    };
-
-    const setLS = (currentLS, check) => {
-        if (currentLS === null) {
-            localStorage.setItem(
-                "addList",
-                JSON.stringify([
-                    { text: itemObj.text, count: count + 1, when: Date.now() },
-                ])
-            );
-        } else if (check) {
-            currentLS.splice(
-                currentLS.findIndex((i) => i.text === itemObj.text),
-                1,
-                {
-                    text: itemObj.text,
-                    count: count + 1,
-                    when: Date.now(),
-                }
-            );
-            localStorage.setItem("addList", JSON.stringify(currentLS));
-        } else if (!check) {
-            currentLS.push({
-                text: itemObj.text,
-                count: count + 1,
-                when: Date.now(),
-            });
-            localStorage.setItem("addList", JSON.stringify(currentLS));
-        }
+        onAddList({
+            text: itemObj.text,
+            count: count + 1,
+            when: Date.now(),
+        });
     };
 
     const resetCount = () => {
-        try {
-            const addList = JSON.parse(localStorage.getItem("addList"));
-            const index = addList.findIndex((i) => i.text === itemObj.text);
-            if (index !== -1) {
-                addList.splice(index, 1);
-                localStorage.setItem("addList", JSON.stringify(addList));
-                setCount(0);
-            }
-        } catch {
-            setCount(0);
-        }
+        setCount(0);
+        onAddList(
+            {
+                text: itemObj.text,
+            },
+            true
+        );
     };
 
     if (editing) {
@@ -186,7 +153,7 @@ const ReadyItem = ({ addStart, chickens, itemObj, storeCode, editMode }) => {
                     variant="contained"
                     color="primary"
                     className="Nweet-count"
-                    onClick={onSale}
+                    onClick={addCountHandler}
                 >
                     {count}개
                 </Button>
@@ -204,4 +171,4 @@ const ReadyItem = ({ addStart, chickens, itemObj, storeCode, editMode }) => {
     }
 };
 
-export default ReadyItem;
+export default React.memo(ReadyItem);

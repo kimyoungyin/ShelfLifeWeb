@@ -29,14 +29,14 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const Home = ({ addStart, storeCode, editMode }) => {
+const Home = ({ addStart, storeCode, editMode, onAddItemToList }) => {
     const classes = useStyles();
     const [item, setItem] = useState("");
     const [items, setItems] = useState([]);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [findInput, setFindInput] = useState("");
-
+    console.log("home is rerendered");
     useEffect(() => {
         const fetchData = async () => {
             await dbService
@@ -147,6 +147,7 @@ const Home = ({ addStart, storeCode, editMode }) => {
                             itemObj={nweet}
                             storeCode={storeCode}
                             chickens={items}
+                            onAddList={onAddItemToList}
                         />
                     ))}
                 </div>
@@ -188,6 +189,7 @@ const Home = ({ addStart, storeCode, editMode }) => {
                                 storeCode={storeCode}
                                 chickens={items}
                                 addStart={addStart}
+                                onAddList={onAddItemToList}
                             />
                         ))}
                     </div>
@@ -197,4 +199,4 @@ const Home = ({ addStart, storeCode, editMode }) => {
     );
 };
 
-export default Home;
+export default React.memo(Home);

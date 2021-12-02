@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Home from "components/Home";
-import { dbService } from "fbase";
+import { dbService, firebaseInstance } from "fbase";
 import { Button, ButtonGroup, Fab } from "@material-ui/core";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import "../css/Store.css";
@@ -11,6 +11,7 @@ const Store = () => {
     const [haveStore, setHaveStore] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [addStart, setAddStart] = useState(false);
+    const [addList, setAddList] = useState([]);
 
     useEffect(() => {
         const getLS = () => {
@@ -46,33 +47,42 @@ const Store = () => {
         setEditMode((prev) => !prev);
     };
 
-    const toggleAddMode = async () => {
-        const addList = JSON.parse(localStorage.getItem("addList"));
-        if (addStart === false) {
-            setAddStart(true);
-        } else if (addList === null || addList.length === 0) {
-            alert("진열할 제품을 선택해주세요");
-        } else {
-            try {
-                const currentList = await (
-                    await dbService.collection(storeCode).doc("onSale").get()
-                ).data().list;
-                const result = currentList.concat(addList);
-                await dbService.collection(storeCode).doc("onSale").set({
-                    list: result,
-                });
-            } catch (e) {
-                await dbService.collection(storeCode).doc("onSale").set({
-                    list: addList,
-                });
+    const toggleAddModeHandler = () => {
+        setAddStart(true);
+    };
+
+    const addItemListHandler = (newItem, isReset = false) => {
+        setAddList((prev) => {
+            const pureList = prev.filter(
+                (prevItem) => prevItem.text !== newItem.text
+            );
+            if (isReset) {
+                console.log(pureList);
+                return pureList;
             }
-            localStorage.removeItem("addList");
-            setAddStart(false);
+            console.log([newItem, ...pureList]);
+            return [...pureList, newItem];
+        });
+    };
+
+    const postItemListHandler = async () => {
+        if (addList.length === 0) return alert("진열할 제품을 선택해주세요");
+        try {
+            await dbService
+                .collection(storeCode)
+                .doc("onSale")
+                .update({
+                    list: firebaseInstance.firestore.FieldValue.arrayUnion(
+                        ...addList
+                    ),
+                });
+        } catch (e) {
+            console.log(e);
         }
+        setAddStart(false);
     };
 
     const cancelAddMode = () => {
-        localStorage.removeItem("addList");
         setAddStart(false);
     };
 
@@ -84,6 +94,7 @@ const Store = () => {
                         addStart={addStart}
                         editMode={editMode}
                         storeCode={storeCode}
+                        onAddItemToList={addItemListHandler}
                     />
                     {!editMode && !addStart && (
                         <ButtonGroup
@@ -93,7 +104,10 @@ const Store = () => {
                             <Button onClick={toggleEditMode} color="secondary">
                                 수정하기
                             </Button>
-                            <Button onClick={toggleAddMode} color="primary">
+                            <Button
+                                onClick={toggleAddModeHandler}
+                                color="primary"
+                            >
                                 진열하기
                             </Button>
                         </ButtonGroup>
@@ -106,7 +120,7 @@ const Store = () => {
                             <Button
                                 variant="contained"
                                 color="secondary"
-                                onClick={toggleAddMode}
+                                onClick={postItemListHandler}
                             >
                                 진열
                             </Button>
