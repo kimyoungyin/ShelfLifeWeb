@@ -9,61 +9,61 @@ import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 import AlarmIcon from "@material-ui/icons/Alarm";
 
 const useStyles = makeStyles({
-  root: {
-    width: "100%",
-    position: "fixed",
-    bottom: 0,
-    height: 50,
-  },
+    root: {
+        width: "100%",
+        position: "fixed",
+        bottom: 0,
+        height: 50,
+    },
 });
 
 const Navigation = () => {
-  const classes = useStyles();
-  const [value, setValue] = React.useState("recents");
+    const classes = useStyles();
+    const [value, setValue] = React.useState("Store");
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
-  return (
-    <BottomNavigation
-      value={value}
-      onChange={handleChange}
-      showLabels
-      className={classes.root}
-    >
-      <BottomNavigationAction
-        component={Link}
-        exact="true"
-        to="/"
-        replace
-        className="Navigation-link"
-        label="진열가능"
-        value="Store"
-        icon={<PlaylistAddIcon />}
-      />
+    return (
+        <BottomNavigation
+            value={value}
+            onChange={handleChange}
+            showLabels
+            className={classes.root}
+        >
+            <BottomNavigationAction
+                component={Link}
+                exact="true"
+                to="/"
+                replace
+                className="Navigation-link"
+                label="진열가능"
+                value="Store"
+                icon={<PlaylistAddIcon />}
+            />
 
-      <BottomNavigationAction
-        component={Link}
-        to="/OnSale"
-        replace
-        className="Navigation-link"
-        label="진열중"
-        value="OnSale"
-        icon={<AlarmIcon />}
-      />
+            <BottomNavigationAction
+                component={Link}
+                to="/OnSale"
+                replace
+                className="Navigation-link"
+                label="진열중"
+                value="OnSale"
+                icon={<AlarmIcon />}
+            />
 
-      <BottomNavigationAction
-        component={Link}
-        to="/profile"
-        replace
-        className="Navigation-link"
-        label="내정보"
-        value="Profile"
-        icon={<PersonIcon />}
-      />
-    </BottomNavigation>
-  );
+            <BottomNavigationAction
+                component={Link}
+                to="/profile"
+                replace
+                className="Navigation-link"
+                label="내정보"
+                value="Profile"
+                icon={<PersonIcon />}
+            />
+        </BottomNavigation>
+    );
 };
 
 export default Navigation;
