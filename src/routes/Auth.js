@@ -1,16 +1,24 @@
 import { Button, TextField } from "@material-ui/core";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import IntegratedAdfitComponent from "components/Adfit";
-import { authService, firebaseInstance } from "fbase";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    authActions,
+    authModes,
+    defaultAuth,
+    githubLogin,
+    googleLogin,
+} from "Redux-store/auth-slice";
 import "../css/Auth.css";
 
 const Auth = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [newAccount, setNewAccount] = useState(true);
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
+    const { isError, errorMessage } = useSelector((state) => state.error);
+    const authMode = useSelector((state) => state.auth.mode);
+    const dispatch = useDispatch();
+
     const onChange = (event) => {
         const {
             target: { name, value },
@@ -22,99 +30,25 @@ const Auth = () => {
         }
     };
 
-    const onSubmit = async (event) => {
+    const defaultAuthSubmitHandler = (event) => {
         event.preventDefault();
-        try {
-            setError(false);
-            let data;
-            if (newAccount) {
-                data = await authService.createUserWithEmailAndPassword(
-                    email,
-                    password
-                );
-            } else {
-                data = await authService.signInWithEmailAndPassword(
-                    email,
-                    password
-                );
-            }
-            console.log(data);
-        } catch (err) {
-            setError(true);
-            if (err.message === "The email address is badly formatted.") {
-                setErrorMessage("이메일 양식이 올바르지 않습니다.");
-            } else if (
-                err.message ===
-                "The email address is already in use by another account."
-            ) {
-                setErrorMessage("이미 같은 이메일의 계정이 있습니다.");
-            } else if (
-                err.message ===
-                "There is no user record corresponding to this identifier. The user may have been deleted."
-            ) {
-                setErrorMessage("계정이 존재하지 않습니다");
-            } else if (
-                err.message ===
-                "The password is invalid or the user does not have a password."
-            ) {
-                setErrorMessage("비밀번호가 일치하지 않습니다.");
-            } else if (
-                err.message === "Password should be at least 6 characters"
-            ) {
-                setErrorMessage("비밀번호는 최소 6자 이상이어야 합니다.");
-            } else {
-                setErrorMessage(err.message);
-            }
-        }
+        dispatch(defaultAuth({ email, password, mode: authMode }));
     };
 
-    const toggleAccount = () => setNewAccount((prev) => !prev);
-    const onSocialGoogleClick = async () => {
-        let provider;
-        try {
-            setError(false);
-            provider = new firebaseInstance.auth.GoogleAuthProvider();
-            const data = await authService.signInWithPopup(provider);
-            console.log(data);
-        } catch (err) {
-            setError(true);
-            if (
-                err.message ===
-                "An account already exists with the same email address but different sign-in credentials. Sign in using a provider associated with this email address."
-            ) {
-                setErrorMessage("이미 같은 이메일의 계정이 있습니다");
-            } else {
-                setErrorMessage(err.message);
-            }
-        }
+    const toggleAccount = () => dispatch(authActions.toggleAuthMode());
+
+    const socialGoogleAuthHandler = () => {
+        dispatch(googleLogin());
     };
 
-    const onSocialGithubClick = async () => {
-        let provider;
-        try {
-            setError(false);
-            provider = new firebaseInstance.auth.GithubAuthProvider();
-            const data = await authService.signInWithPopup(provider);
-            console.log(data);
-        } catch (err) {
-            setError(true);
-            if (
-                err.message ===
-                "An account already exists with the same email address but different sign-in credentials. Sign in using a provider associated with this email address."
-            ) {
-                setErrorMessage("이미 같은 이메일의 계정이 있습니다");
-            } else {
-                setErrorMessage(err.message);
-            }
-        }
+    const socialGithubAuthHandler = () => {
+        dispatch(githubLogin());
     };
 
     return (
         <div className="Auth">
-            <div className="Auth-title">
-                {newAccount ? "간단한 회원가입" : "로그인"}
-            </div>
-            <form onSubmit={onSubmit}>
+            <div className="Auth-title">{authMode}</div>
+            <form onSubmit={defaultAuthSubmitHandler}>
                 <TextField
                     label="Email"
                     type="email"
@@ -122,7 +56,7 @@ const Auth = () => {
                     variant="outlined"
                     onChange={onChange}
                     value={email}
-                    error={error}
+                    error={isError}
                     required={true}
                 />
                 <TextField
@@ -132,17 +66,16 @@ const Auth = () => {
                     variant="outlined"
                     onChange={onChange}
                     value={password}
-                    error={error}
+                    error={isError}
                     helperText={errorMessage}
                     required={true}
                 />
                 <button className="Auth-submit" type="submit">
-                    {newAccount ? "계정 생성" : "로그인하기"}
+                    {authMode === authModes.SIGNUP ? "계정 생성" : "로그인하기"}
                 </button>
-                {error}
             </form>
             <button className="Auth-toggle" onClick={toggleAccount}>
-                {newAccount
+                {authMode === authModes.SIGNUP
                     ? "계정이 있어요(로그인)"
                     : "계정이 아직 없어요(회원가입)"}
             </button>
@@ -151,7 +84,7 @@ const Auth = () => {
                     name="google"
                     variant="contained"
                     color="primary"
-                    onClick={onSocialGoogleClick}
+                    onClick={socialGoogleAuthHandler}
                 >
                     구글 계정으로 시작하기
                 </Button>
@@ -159,7 +92,7 @@ const Auth = () => {
                     name="github"
                     variant="contained"
                     color="secondary"
-                    onClick={onSocialGithubClick}
+                    onClick={socialGithubAuthHandler}
                 >
                     <GitHubIcon />
                     &nbsp; 깃허브 계정으로 시작하기

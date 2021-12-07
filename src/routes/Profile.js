@@ -1,16 +1,19 @@
 import { Button, ButtonGroup } from "@material-ui/core";
 import IntegratedAdfitComponent from "components/Adfit";
-import { authService } from "fbase";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import { authActions } from "Redux-store/auth-slice";
 import "../css/Profile.css";
 
-const Profile = ({ userObj }) => {
+const Profile = () => {
+    const userObj = useSelector((state) => state.auth.user);
+    const dispatch = useDispatch();
     const history = useHistory();
     const storeCode = JSON.parse(localStorage.getItem("storeCode"));
 
     const onLogOutClick = () => {
-        authService.signOut();
+        dispatch(authActions.logout());
         history.push("/");
     };
 
