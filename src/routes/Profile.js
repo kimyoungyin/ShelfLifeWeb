@@ -1,5 +1,4 @@
 import { Button, ButtonGroup } from "@material-ui/core";
-import IntegratedAdfitComponent from "components/Adfit";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -52,9 +51,6 @@ const Profile = () => {
                 <div className="Profile-code">
                     <div className="Profile-border">사용중인 매장코드</div>
                     <div>{storeCode}</div>
-                </div>
-                <div className="Profile-Adfit">
-                    <IntegratedAdfitComponent />
                 </div>
                 <Button variant="contained" color="primary" onClick={dropDown}>
                     사용 가이드

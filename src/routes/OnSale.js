@@ -4,7 +4,6 @@ import { dbService } from "fbase";
 import "../css/OnSale.css";
 import SaleItem from "components/SaleItem";
 import { makeStyles, TextField } from "@material-ui/core";
-import IntegratedAdfitComponent from "components/Adfit";
 
 const useStyles = makeStyles(() => ({
     search: {
@@ -78,9 +77,7 @@ const OnSale = () => {
                         className={classes.search}
                         variant="outlined"
                     />
-                    <div className="OnSale-Adfit">
-                        <IntegratedAdfitComponent />
-                    </div>
+
                     {filterInput.map((itemObj) => (
                         <SaleItem
                             key={itemObj.when}

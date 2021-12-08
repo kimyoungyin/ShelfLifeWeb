@@ -1,6 +1,5 @@
 import { Button, TextField } from "@material-ui/core";
 import GitHubIcon from "@material-ui/icons/GitHub";
-import IntegratedAdfitComponent from "components/Adfit";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -97,9 +96,6 @@ const Auth = () => {
                     <GitHubIcon />
                     &nbsp; 깃허브 계정으로 시작하기
                 </Button>
-                <div className="Auth-Adfit">
-                    <IntegratedAdfitComponent />
-                </div>
             </div>
         </div>
     );

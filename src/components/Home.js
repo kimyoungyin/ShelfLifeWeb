@@ -7,7 +7,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-import IntegratedAdfitComponent from "./Adfit";
 
 const useStyles = makeStyles(() => ({
     enroll: {
@@ -177,9 +176,6 @@ const Home = ({ addStart, storeCode, editMode, onAddItemToList }) => {
                             <AddIcon />
                         </Fab>
                     </form>
-                    <div className="Home-Adfit">
-                        <IntegratedAdfitComponent />
-                    </div>
                     <div className="Home-NweetList">
                         {filterFindInput.map((nweet) => (
                             <ReadyItem
