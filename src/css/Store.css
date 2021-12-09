@@ -1,76 +1,81 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 .Store {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .Store-buttons {
-  width: 100%;
-  position: fixed;
-  bottom: 50px;
+    width: 100%;
+    position: fixed;
+    bottom: 50px;
 }
 
 .Store-buttons button {
-  flex: 1;
+    flex: 1;
+}
+
+.Register {
+    display: flex;
+    flex-direction: column;
 }
 
 .Store-code {
-  background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  border-radius: 29px;
-  padding: 5px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border-radius: 29px;
+    padding: 5px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .Store-code input,
 .Store-code input:focus {
-  margin-left: 5px;
-  border: none;
-  outline: none;
-  text-align: start;
+    margin-left: 5px;
+    border: none;
+    outline: none;
+    text-align: start;
 }
 
 .Store-explain {
-  width: 90%;
-  margin: 0 auto 55px;
-  padding: 20px;
-  background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  border-radius: 5px;
-  margin-top: 10px;
-  color: gray;
-  line-height: 1.5;
+    width: 90%;
+    margin: 0 auto 55px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border-radius: 5px;
+    margin-top: 10px;
+    color: gray;
+    line-height: 1.5;
 }
 
 .Store-explain h3 {
-  color: black;
-  font-weight: bold;
-  font-size: 18px;
-  margin-bottom: 20px;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 20px;
 }
 
 .Store-explain h3:last-of-type {
-  margin-top: 25px;
+    margin-top: 25px;
 }
 
 .Store-explain .Store-explain-title {
-  color: gray;
-  text-align: center;
-  font-size: 14px;
+    color: gray;
+    text-align: center;
+    font-size: 14px;
 }
 
 .Store-explain .Store-explain-warning {
-  color: red;
-  font-size: 12px;
+    color: red;
+    font-size: 12px;
 }
 
 .Store-explain .Store-Adfit {
-  margin-top: 10px;
+    margin-top: 10px;
 }
