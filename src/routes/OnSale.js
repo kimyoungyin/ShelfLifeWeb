@@ -32,7 +32,7 @@ const OnSale = () => {
                 .doc("onSale")
                 .onSnapshot((doc) => {
                     try {
-                        const chickens = doc.data().list;
+                        const chickens = doc.data() ? doc.data().list : [];
                         chickens.sort((a, b) => {
                             if (a.when > b.when) return 1;
                             if (a.when < b.when) return -1;

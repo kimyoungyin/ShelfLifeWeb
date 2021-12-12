@@ -75,12 +75,12 @@ export const productsActions = productsSlice.actions;
 
 export const getReadyProducts = (storeCode) => {
     return async (dispatch) => {
-        await dbService
-            .collection(storeCode)
-            .doc("Chickens")
-            .onSnapshot((doc) => {
-                try {
-                    const chickens = doc.data().list;
+        try {
+            await dbService
+                .collection(storeCode)
+                .doc("Chickens")
+                .onSnapshot((doc) => {
+                    const chickens = doc.data() ? doc.data().list : [];
                     chickens.sort((a, b) => {
                         if (a.text > b.text) return 1;
                         if (a.text < b.text) return -1;
@@ -88,11 +88,12 @@ export const getReadyProducts = (storeCode) => {
                     });
                     dispatch(errorActions.off());
                     dispatch(productsActions.changeReadyProducts(chickens));
-                } catch (error) {
-                    console.log(error);
-                    dispatch(errorActions.on(error));
-                }
-            });
+                });
+        } catch (error) {
+            console.log(error);
+            // dispatch(productsActions.changeReadyProducts([]));
+            dispatch(errorActions.on(error));
+        }
     };
 };
 
