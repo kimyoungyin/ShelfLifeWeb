@@ -17,7 +17,6 @@ const Auth = () => {
     const { isError, errorMessage } = useSelector((state) => state.error);
     const authMode = useSelector((state) => state.auth.mode);
     const dispatch = useDispatch();
-
     const onChange = (event) => {
         const {
             target: { name, value },

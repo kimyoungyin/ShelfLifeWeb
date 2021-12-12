@@ -3,22 +3,24 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { authActions } from "Redux-store/auth-slice";
+import { navigationActions } from "Redux-store/navigation-slice";
+import { productsActions } from "Redux-store/products-slice";
 import "../css/Profile.css";
 
 const Profile = () => {
     const userObj = useSelector((state) => state.auth.user);
+    const storeCode = useSelector((state) => state.products.storeCode);
     const dispatch = useDispatch();
     const history = useHistory();
-    const storeCode = JSON.parse(localStorage.getItem("storeCode"));
 
-    const onLogOutClick = () => {
+    const logoutHandler = () => {
+        history.push("/auth");
         dispatch(authActions.logout());
-        history.push("/");
     };
 
-    const deleteLS = () => {
-        localStorage.clear();
-        history.push("/");
+    const moveToRegisterHandler = () => {
+        dispatch(navigationActions.changeActiveNavigation("/register"));
+        history.push("/register");
     };
 
     const dropDown = () => {
@@ -39,7 +41,7 @@ const Profile = () => {
                 </div>
                 <div className="Profile-email">
                     <div>
-                        문의사항 :{" "}
+                        문의사항 :
                         <a href="mailto:mafa1234@naver.com">
                             mafa1234@naver.com
                         </a>
@@ -218,11 +220,15 @@ const Profile = () => {
                 <Button
                     variant="contained"
                     color="secondary"
-                    onClick={onLogOutClick}
+                    onClick={logoutHandler}
                 >
                     Log Out
                 </Button>
-                <Button variant="contained" color="default" onClick={deleteLS}>
+                <Button
+                    variant="contained"
+                    color="default"
+                    onClick={moveToRegisterHandler}
+                >
                     다른 매장으로 접속
                 </Button>
             </ButtonGroup>

@@ -19,4 +19,12 @@ export const theme = createMuiTheme({
             main: "#00e676",
         },
     },
+    // typography: {
+    //     h2: {
+    //         fontFamily: "Open Sans",
+    //     },
+    //     h6: {
+    //         fontFamily: "Jua",
+    //     },
+    // },
 });

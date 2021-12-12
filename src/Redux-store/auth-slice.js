@@ -30,7 +30,7 @@ const authSlice = createSlice({
         logout: (state) => {
             if (!state.isLoggedIn) return state;
             authService.signOut();
-            state = { isLoggedIn: false, user: null, mode: authModes.LOGIN };
+            return { isLoggedIn: false, user: null, mode: authModes.LOGIN };
         },
         toggleAuthMode: (state) => {
             if (state.mode === authModes.LOGIN) {
