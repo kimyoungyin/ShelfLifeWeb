@@ -23,6 +23,7 @@ const productsSlice = createSlice({
     initialState: productsInitialState,
     reducers: {
         changeStoreCode: (state, action) => {
+            if (state.storeCode === action.payload) return state;
             localStorage.setItem("storeCode", JSON.stringify(action.payload));
             return { ...state, storeCode: action.payload };
         },

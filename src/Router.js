@@ -1,10 +1,6 @@
 import React from "react";
-import {
-    BrowserRouter as Router,
-    Redirect,
-    Route,
-    Switch,
-} from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router";
+import { BrowserRouter } from "react-router-dom";
 import Profile from "routes/Profile";
 import Auth from "./routes/Auth";
 import Navigation from "./components/Navigation";
@@ -30,41 +26,45 @@ const AppRouter = () => {
     );
 
     const validatedRoute = (Route) => {
-        if (!isLoggedIn) return <Redirect to="/auth" />;
-        if (!storeCode) return <Redirect to="/register" />;
+        if (!isLoggedIn) return <Navigate to="/auth" />;
+        if (!storeCode) return <Navigate to="/register" />;
         return <Route storeCode={storeCode} />;
     };
 
     return (
-        <Router>
+        <BrowserRouter>
             <MenuBar />
             <div className="Router-switch">
-                <Switch>
+                <Routes>
                     {routes.map((obj) => (
-                        <Route exact path={obj.pathname} key={obj.pathname}>
-                            {validatedRoute(obj.component)}
-                        </Route>
+                        <Route
+                            path={obj.pathname}
+                            key={obj.pathname}
+                            element={validatedRoute(obj.component)}
+                        />
                     ))}
-                    <Route exact path="/register">
-                        {!isLoggedIn ? (
-                            <Redirect to="/auth" />
-                        ) : (
-                            <Register storeCode={storeCode} />
-                        )}
-                    </Route>
-                    <Route exact path="/auth">
-                        {isLoggedIn ? <Redirect to="/" /> : <Auth />}
-                    </Route>
-                    <Route path="*">
-                        <Redirect to="/" />
-                    </Route>
-                </Switch>
+                    <Route
+                        path="/register"
+                        element={
+                            !isLoggedIn ? (
+                                <Navigate to="/auth" />
+                            ) : (
+                                <Register storeCode={storeCode} />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/auth"
+                        element={isLoggedIn ? <Navigate to="/" /> : <Auth />}
+                    />
+                    <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
             </div>
             {deletingProduct && (
                 <Confirm confirmObj={deletingProduct} storeCode={storeCode} />
             )}
             {isLoggedIn && <Navigation />}
-        </Router>
+        </BrowserRouter>
     );
 };
 

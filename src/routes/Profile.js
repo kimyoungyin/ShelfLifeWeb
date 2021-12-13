@@ -1,7 +1,7 @@
 import { Button, ButtonGroup } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import { authActions } from "Redux-store/auth-slice";
 import { navigationActions } from "Redux-store/navigation-slice";
 import { productsActions } from "Redux-store/products-slice";
@@ -10,16 +10,16 @@ import "../css/Profile.css";
 const Profile = ({ storeCode }) => {
     const userObj = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const logoutHandler = () => {
-        history.push("/auth");
+        navigate.push("/auth");
         dispatch(authActions.logout());
     };
 
     const moveToRegisterHandler = () => {
         dispatch(navigationActions.changeActiveNavigation("/register"));
-        history.push("/register");
+        navigate("/register");
     };
 
     const dropDown = () => {

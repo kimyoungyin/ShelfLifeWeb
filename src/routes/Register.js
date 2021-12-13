@@ -2,19 +2,19 @@ import { Fab } from "@material-ui/core";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import { useInput } from "hooks/useInput";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import { productsActions } from "Redux-store/products-slice";
 import "../css/Store.css";
 
 const Register = ({ storeCode }) => {
     const [storeCodeInput] = useInput(storeCode);
     const dispatch = useDispatch();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const onSubmit = (event) => {
         event.preventDefault();
         dispatch(productsActions.changeStoreCode(storeCodeInput.value));
-        history.push("/");
+        navigate("/");
     };
 
     return (
