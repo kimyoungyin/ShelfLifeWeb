@@ -7,9 +7,8 @@ import { navigationActions } from "Redux-store/navigation-slice";
 import { productsActions } from "Redux-store/products-slice";
 import "../css/Profile.css";
 
-const Profile = () => {
+const Profile = ({ storeCode }) => {
     const userObj = useSelector((state) => state.auth.user);
-    const storeCode = useSelector((state) => state.products.storeCode);
     const dispatch = useDispatch();
     const history = useHistory();
 

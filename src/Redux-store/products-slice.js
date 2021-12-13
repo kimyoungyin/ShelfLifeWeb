@@ -75,6 +75,7 @@ export const productsActions = productsSlice.actions;
 
 export const getReadyProducts = (storeCode) => {
     return async (dispatch) => {
+        if (!storeCode) return;
         try {
             await dbService
                 .collection(storeCode)

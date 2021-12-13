@@ -30,11 +30,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const Home = ({
-    mode,
-    storeCode,
-    // onAddItemToList
-}) => {
+const Home = ({ mode, storeCode }) => {
     const classes = useStyles();
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");

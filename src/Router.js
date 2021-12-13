@@ -16,6 +16,12 @@ import { useSelector } from "react-redux";
 import Register from "routes/Register";
 import Confirm from "components/Confirm";
 
+const routes = [
+    { component: Store, pathname: "/" },
+    { component: OnSale, pathname: "/onSale" },
+    { component: Profile, pathname: "/profile" },
+];
+
 const AppRouter = () => {
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const storeCode = useSelector((state) => state.products.storeCode);
@@ -23,27 +29,34 @@ const AppRouter = () => {
         (state) => state.products.deletingProductObj
     );
 
+    const validatedRoute = (Route) => {
+        if (!isLoggedIn) return <Redirect to="/auth" />;
+        if (!storeCode) return <Redirect to="/register" />;
+        return <Route storeCode={storeCode} />;
+    };
+
     return (
         <Router>
             <MenuBar />
             <div className="Router-switch">
-                {storeCode === null && <Redirect from="*" to="/register" />}
-                {isLoggedIn || <Redirect from="*" to="/auth" />}
                 <Switch>
-                    <Route exact path="/">
-                        <Store storeCode={storeCode} />
+                    {routes.map((obj) => (
+                        <Route exact path={obj.pathname} key={obj.pathname}>
+                            {validatedRoute(obj.component)}
+                        </Route>
+                    ))}
+                    <Route exact path="/register">
+                        {!isLoggedIn ? (
+                            <Redirect to="/auth" />
+                        ) : (
+                            <Register storeCode={storeCode} />
+                        )}
                     </Route>
                     <Route exact path="/auth">
                         {isLoggedIn ? <Redirect to="/" /> : <Auth />}
                     </Route>
-                    <Route path="/onSale">
-                        <OnSale />
-                    </Route>
-                    <Route exact path="/profile">
-                        <Profile />
-                    </Route>
-                    <Route exact path="/register">
-                        <Register storeCode={storeCode} />
+                    <Route path="*">
+                        <Redirect to="/" />
                     </Route>
                 </Switch>
             </div>
