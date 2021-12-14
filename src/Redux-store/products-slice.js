@@ -12,10 +12,11 @@ const productsInitialState = {
     storeCode: JSON.parse(localStorage.getItem("storeCode")),
     mode: productsModes.DEFAULT,
     readyProducts: [],
+    editingReadyProduct: null, //string
     productsCart: [],
     sellingProducts: [],
-    editingProduct: null, //string
     deletingProductObj: null, // object
+    handlingSellingProductObj: null, // object
 };
 
 const productsSlice = createSlice({
@@ -37,7 +38,7 @@ const productsSlice = createSlice({
         },
         addCart: (state, action) => {
             const pureList = state.productsCart.filter(
-                (prevItem) => prevItem.text !== action.payload
+                (prevItem) => prevItem.text !== action.payload.text
             );
             return { ...state, productsCart: [...pureList, action.payload] };
         },
@@ -46,24 +47,23 @@ const productsSlice = createSlice({
                 (prevItem) => prevItem.text !== action.payload.text
             );
         },
-        startSell: (state, action) => {
-            // 비어있는지 creator로 체크
-            return {
-                ...state,
-                sellingProducts: [...state.sellingProducts, ...action.payload],
-            };
+        changeSellingProducts: (state, action) => {
+            state.sellingProducts = action.payload;
         },
         changeEditingProduct: (state, action) => {
-            state.editingProduct = action.payload;
+            state.editingReadyProduct = action.payload;
         },
         updateEditingProduct: (state, action) => {
             const updatingIndex = state.readyProducts.findIndex(
-                (prevItem) => prevItem.text === state.editingProduct
+                (prevItem) => prevItem.text === state.editingReadyProduct
             );
             state.readyProducts[updatingIndex] = action.payload;
         },
         changeDeletingProductObj: (state, action) => {
             state.deletingProductObj = action.payload;
+        },
+        changeHandlingSellingProductObj: (state, action) => {
+            state.handlingSellingProductObj = action.payload;
         },
     },
 });
@@ -112,7 +112,6 @@ export const startSellingProducts = (cart, storeCode) => {
                         ...cart
                     ),
                 });
-            dispatch(productsActions.startSell(cart));
             dispatch(productsActions.changeMode(productsModes.DEFAULT)); // 다시 원상복귀
         } catch (error) {
             dispatch(errorActions.on(error));
@@ -167,7 +166,7 @@ export const validateAndChangeEditingProduct = (
     };
 };
 
-export const deleteProduct = (deletObj, storeCode) => {
+export const deleteReadyProduct = (deleteObj, storeCode) => {
     return async (dispatch) => {
         try {
             dispatch(productsActions.changeDeletingProductObj(null));
@@ -176,7 +175,63 @@ export const deleteProduct = (deletObj, storeCode) => {
                 .doc("Chickens")
                 .update({
                     list: firebaseInstance.firestore.FieldValue.arrayRemove(
-                        deletObj
+                        deleteObj
+                    ),
+                });
+        } catch (error) {
+            dispatch(errorActions.on(error));
+        }
+    };
+};
+
+export const getSellingProducts = (storeCode) => {
+    return async (dispatch) => {
+        if (!storeCode) return;
+        try {
+            await dbService
+                .collection(storeCode)
+                .doc("onSale")
+                .onSnapshot((doc) => {
+                    const chickens = doc.data() ? doc.data().list : [];
+                    chickens.sort((a, b) => {
+                        if (a.when > b.when) return 1;
+                        if (a.when < b.when) return -1;
+
+                        return 0;
+                    });
+                    dispatch(errorActions.off());
+                    dispatch(productsActions.changeSellingProducts(chickens));
+                });
+        } catch (error) {
+            dispatch(errorActions.on(error));
+        }
+    };
+};
+
+export const deleteSoldProduct = (storeCode, solditemObj, restNumber) => {
+    return async (dispatch) => {
+        try {
+            dispatch(productsActions.changeHandlingSellingProductObj(null));
+            await dbService
+                .collection(storeCode)
+                .doc("onSale")
+                .update({
+                    list: firebaseInstance.firestore.FieldValue.arrayRemove(
+                        solditemObj
+                    ),
+                });
+            if (restNumber <= 0) return;
+            const restObj = {
+                ...solditemObj,
+                count: restNumber,
+            };
+            // 자연스러운 Ui를 위해 로딩 구현해야하나?
+            await dbService
+                .collection(storeCode)
+                .doc("onSale")
+                .update({
+                    list: firebaseInstance.firestore.FieldValue.arrayUnion(
+                        restObj
                     ),
                 });
         } catch (error) {

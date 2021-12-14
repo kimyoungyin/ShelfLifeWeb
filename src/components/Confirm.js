@@ -6,7 +6,10 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useDispatch } from "react-redux";
-import { deleteProduct, productsActions } from "Redux-store/products-slice";
+import {
+    deleteReadyProduct,
+    productsActions,
+} from "Redux-store/products-slice";
 
 const Confirm = ({ confirmObj, storeCode }) => {
     const dispatch = useDispatch();
@@ -14,7 +17,7 @@ const Confirm = ({ confirmObj, storeCode }) => {
         dispatch(productsActions.changeDeletingProductObj(null));
 
     const deleteHandler = () => {
-        dispatch(deleteProduct(confirmObj, storeCode));
+        dispatch(deleteReadyProduct(confirmObj, storeCode));
     };
     return (
         <Dialog
