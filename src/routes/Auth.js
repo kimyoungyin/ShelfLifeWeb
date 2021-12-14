@@ -22,7 +22,7 @@ const Auth = () => {
 
     useEffect(() => {
         dispatch(errorActions.off());
-    }, [emailInput.value, passwordInput.value]);
+    }, [emailInput.value, passwordInput.value, dispatch]);
 
     const defaultAuthSubmitHandler = (event) => {
         event.preventDefault();

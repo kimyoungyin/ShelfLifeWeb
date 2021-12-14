@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { authActions } from "Redux-store/auth-slice";
 import { navigationActions } from "Redux-store/navigation-slice";
-import { productsActions } from "Redux-store/products-slice";
 import "../css/Profile.css";
 
 const Profile = ({ storeCode }) => {
@@ -13,7 +12,7 @@ const Profile = ({ storeCode }) => {
     const navigate = useNavigate();
 
     const logoutHandler = () => {
-        navigate.push("/auth");
+        navigate("/auth");
         dispatch(authActions.logout());
     };
 
