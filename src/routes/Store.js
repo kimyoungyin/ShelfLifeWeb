@@ -1,192 +1,80 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Home from "components/Home";
-import { dbService, firebaseInstance } from "fbase";
-import { Button, ButtonGroup, Fab } from "@material-ui/core";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+
+import { Button, ButtonGroup } from "@material-ui/core";
 import "../css/Store.css";
-import IntegratedAdfitComponent from "components/Adfit";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    productsActions,
+    productsModes,
+    startSellingProducts,
+} from "Redux-store/products-slice";
 
-const Store = () => {
-    const [storeCode, setStoreCode] = useState("");
-    const [haveStore, setHaveStore] = useState(false);
-    const [editMode, setEditMode] = useState(false);
-    const [addStart, setAddStart] = useState(false);
-    const [addList, setAddList] = useState([]);
+const Store = ({ storeCode }) => {
+    const { mode, productsCart } = useSelector((state) => state.products);
+    const dispatch = useDispatch();
 
-    useEffect(() => {
-        const getLS = () => {
-            if (localStorage.getItem("storeCode") !== null) {
-                setStoreCode(JSON.parse(localStorage.getItem("storeCode")));
-                setHaveStore(true);
-            }
-        };
-        getLS();
-        return () => {
-            setHaveStore(false);
-        };
-    }, []);
-
-    const setLS = () => {
-        localStorage.setItem("storeCode", JSON.stringify(storeCode));
+    const changeMode = (mode) => {
+        dispatch(productsActions.changeMode(mode));
     };
 
-    const onChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setStoreCode(value);
-    };
-
-    const onSubmit = (event) => {
-        event.preventDefault();
-        setLS();
-        setHaveStore(true);
-    };
-
-    const toggleEditMode = () => {
-        setEditMode((prev) => !prev);
-    };
-
-    const toggleAddModeHandler = () => {
-        setAddStart(true);
-    };
-
-    const addItemListHandler = (newItem, isReset = false) => {
-        setAddList((prev) => {
-            const pureList = prev.filter(
-                (prevItem) => prevItem.text !== newItem.text
-            );
-            if (isReset) {
-                console.log(pureList);
-                return pureList;
-            }
-            console.log([newItem, ...pureList]);
-            return [...pureList, newItem];
-        });
-    };
-
-    const postItemListHandler = async () => {
-        if (addList.length === 0) return alert("진열할 제품을 선택해주세요");
-        try {
-            await dbService
-                .collection(storeCode)
-                .doc("onSale")
-                .update({
-                    list: firebaseInstance.firestore.FieldValue.arrayUnion(
-                        ...addList
-                    ),
-                });
-        } catch (e) {
-            console.log(e);
-        }
-        setAddStart(false);
-    };
-
-    const cancelAddMode = () => {
-        setAddStart(false);
+    const postItemListHandler = () => {
+        dispatch(startSellingProducts(productsCart, storeCode));
     };
 
     return (
         <div className="Store">
-            {haveStore ? (
-                <>
-                    <Home
-                        addStart={addStart}
-                        editMode={editMode}
-                        storeCode={storeCode}
-                        onAddItemToList={addItemListHandler}
-                    />
-                    {!editMode && !addStart && (
-                        <ButtonGroup
-                            className="Store-buttons"
-                            variant="contained"
-                        >
-                            <Button onClick={toggleEditMode} color="secondary">
-                                수정하기
-                            </Button>
-                            <Button
-                                onClick={toggleAddModeHandler}
-                                color="primary"
-                            >
-                                진열하기
-                            </Button>
-                        </ButtonGroup>
-                    )}
-                    {addStart && (
-                        <ButtonGroup
-                            className="Store-buttons"
-                            variant="contained"
-                        >
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                onClick={postItemListHandler}
-                            >
-                                진열
-                            </Button>
-                            <Button variant="contained" onClick={cancelAddMode}>
-                                취소
-                            </Button>
-                        </ButtonGroup>
-                    )}
-                    {editMode && (
-                        <ButtonGroup
-                            className="Store-buttons"
-                            variant="contained"
+            <>
+                <Home mode={mode} storeCode={storeCode} />
+                {mode === productsModes.DEFAULT && (
+                    <ButtonGroup className="Store-buttons" variant="contained">
+                        <Button
+                            onClick={() => changeMode(productsModes.EDIT)}
                             color="secondary"
                         >
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                onClick={toggleEditMode}
-                            >
-                                수정완료
-                            </Button>
-                        </ButtonGroup>
-                    )}
-                </>
-            ) : (
-                <>
-                    <form className="Store-code" onSubmit={onSubmit}>
-                        <input
-                            value={storeCode}
-                            onChange={onChange}
-                            type="text"
-                            placeholder="매장코드"
-                        />
-                        <Fab
-                            size="small"
-                            type="submit"
-                            color="secondary"
-                            aria-label="add"
+                            수정하기
+                        </Button>
+                        <Button
+                            onClick={() => changeMode(productsModes.ADD)}
+                            color="primary"
                         >
-                            <PlayArrowIcon />
-                        </Fab>
-                    </form>
-                    <div className="Store-explain">
-                        <h3 className="Store-explain-title">
-                            입력된 매장코드는 아래 두 가지 중 한 가지를 수행하게
-                            됩니다.
-                        </h3>
-                        <h3 className="Store-explain-warning">
-                            주의 : 코드를 공유한 매장 직원 외 다른 사람이
-                            접속하지 못하도록 복잡하게 설정해주세요
-                            <br />
-                            (예시: "매장명"(단순) / "gteg매장명sdfs(복잡)")
-                        </h3>
-                        <h3>1) 매장코드 새로 생성합니다.</h3>
-                        매장 내에서 사용할 독특한 코드를 생성합니다. 직원들과
-                        코드를 공유하세요
-                        <br />
-                        <h3>2) 공유된 매장코드로 접속합니다.</h3>
-                        진열상품을 같은 같은 코드로 접속하여, 매장 직원들과
-                        공동으로 진열기한을 관리하세요
-                        <div className="Store-Adfit">
-                            <IntegratedAdfitComponent />
-                        </div>
-                    </div>
-                </>
-            )}
+                            진열하기
+                        </Button>
+                    </ButtonGroup>
+                )}
+                {mode === productsModes.ADD && (
+                    <ButtonGroup className="Store-buttons" variant="contained">
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={postItemListHandler}
+                        >
+                            진열
+                        </Button>
+                        <Button
+                            variant="contained"
+                            onClick={() => changeMode(productsModes.DEFAULT)}
+                        >
+                            취소
+                        </Button>
+                    </ButtonGroup>
+                )}
+                {mode === productsModes.EDIT && (
+                    <ButtonGroup
+                        className="Store-buttons"
+                        variant="contained"
+                        color="secondary"
+                    >
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => changeMode(productsModes.DEFAULT)}
+                        >
+                            수정완료
+                        </Button>
+                    </ButtonGroup>
+                )}
+            </>
         </div>
     );
 };

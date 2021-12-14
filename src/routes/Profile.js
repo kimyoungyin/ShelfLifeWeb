@@ -1,22 +1,24 @@
 import { Button, ButtonGroup } from "@material-ui/core";
-import IntegratedAdfitComponent from "components/Adfit";
-import { authService } from "fbase";
 import React from "react";
-import { useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { authActions } from "Redux-store/auth-slice";
+import { navigationActions } from "Redux-store/navigation-slice";
 import "../css/Profile.css";
 
-const Profile = ({ userObj }) => {
-    const history = useHistory();
-    const storeCode = JSON.parse(localStorage.getItem("storeCode"));
+const Profile = ({ storeCode }) => {
+    const userObj = useSelector((state) => state.auth.user);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const onLogOutClick = () => {
-        authService.signOut();
-        history.push("/");
+    const logoutHandler = () => {
+        navigate("/auth");
+        dispatch(authActions.logout());
     };
 
-    const deleteLS = () => {
-        localStorage.clear();
-        history.push("/");
+    const moveToRegisterHandler = () => {
+        dispatch(navigationActions.changeActiveNavigation("/register"));
+        navigate("/register");
     };
 
     const dropDown = () => {
@@ -37,7 +39,7 @@ const Profile = ({ userObj }) => {
                 </div>
                 <div className="Profile-email">
                     <div>
-                        문의사항 :{" "}
+                        문의사항 :
                         <a href="mailto:mafa1234@naver.com">
                             mafa1234@naver.com
                         </a>
@@ -49,9 +51,6 @@ const Profile = ({ userObj }) => {
                 <div className="Profile-code">
                     <div className="Profile-border">사용중인 매장코드</div>
                     <div>{storeCode}</div>
-                </div>
-                <div className="Profile-Adfit">
-                    <IntegratedAdfitComponent />
                 </div>
                 <Button variant="contained" color="primary" onClick={dropDown}>
                     사용 가이드
@@ -219,11 +218,15 @@ const Profile = ({ userObj }) => {
                 <Button
                     variant="contained"
                     color="secondary"
-                    onClick={onLogOutClick}
+                    onClick={logoutHandler}
                 >
                     Log Out
                 </Button>
-                <Button variant="contained" color="default" onClick={deleteLS}>
+                <Button
+                    variant="contained"
+                    color="default"
+                    onClick={moveToRegisterHandler}
+                >
                     다른 매장으로 접속
                 </Button>
             </ButtonGroup>

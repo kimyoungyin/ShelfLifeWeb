@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
@@ -7,6 +7,9 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import PersonIcon from "@material-ui/icons/Person";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 import AlarmIcon from "@material-ui/icons/Alarm";
+import { LocalConvenienceStore } from "@material-ui/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { navigationActions } from "Redux-store/navigation-slice";
 
 const useStyles = makeStyles({
     root: {
@@ -19,15 +22,22 @@ const useStyles = makeStyles({
 
 const Navigation = () => {
     const classes = useStyles();
-    const [value, setValue] = React.useState("Store");
-
+    const { pathname } = useLocation();
+    const currentRoute = useSelector((state) => state.navigation);
+    const dispatch = useDispatch();
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        dispatch(navigationActions.changeActiveNavigation(newValue));
     };
+
+    useEffect(() => {
+        if (pathname !== currentRoute) {
+            dispatch(navigationActions.changeActiveNavigation(pathname));
+        }
+    }, [currentRoute, dispatch, pathname]);
 
     return (
         <BottomNavigation
-            value={value}
+            value={currentRoute}
             onChange={handleChange}
             showLabels
             className={classes.root}
@@ -39,17 +49,17 @@ const Navigation = () => {
                 replace
                 className="Navigation-link"
                 label="진열가능"
-                value="Store"
+                value="/"
                 icon={<PlaylistAddIcon />}
             />
 
             <BottomNavigationAction
                 component={Link}
-                to="/OnSale"
+                to="/onSale"
                 replace
                 className="Navigation-link"
                 label="진열중"
-                value="OnSale"
+                value="/onSale"
                 icon={<AlarmIcon />}
             />
 
@@ -59,8 +69,17 @@ const Navigation = () => {
                 replace
                 className="Navigation-link"
                 label="내정보"
-                value="Profile"
+                value="/profile"
                 icon={<PersonIcon />}
+            />
+            <BottomNavigationAction
+                component={Link}
+                to="/register"
+                replace
+                className="Navigation-link"
+                label="매장코드 변경"
+                value="/register"
+                icon={<LocalConvenienceStore />}
             />
         </BottomNavigation>
     );

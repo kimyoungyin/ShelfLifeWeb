@@ -1,51 +1,46 @@
 import { useEffect, useState } from "react";
-import AppRouter from "components/Router";
+import AppRouter from "Router";
 import { authService } from "fbase";
 import { CircularProgress } from "@material-ui/core";
 import "./css/App.css";
 import Intro from "./components/Intro";
+import { useDispatch, useSelector } from "react-redux";
+import { introActions } from "Redux-store/intro-slice";
+import { authActions } from "Redux-store/auth-slice";
 
 function App() {
     const [init, setInit] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userObj, setUserObj] = useState(null);
-    const [sawIntro, setSawIntro] = useState(false);
-
+    const isSeen = useSelector((state) => state.intro.isSeen);
+    const dispatch = useDispatch();
     useEffect(() => {
-        let checkIntro = JSON.parse(localStorage.getItem("sawIntro"));
-        if (checkIntro !== null) {
-            setSawIntro(true);
+        if (isSeen) {
+            dispatch(introActions.saw());
             authService.onAuthStateChanged((user) => {
                 if (user) {
-                    setIsLoggedIn(true);
-                    setUserObj({
+                    const currentUser = {
                         displayName: user.displayName,
                         uid: user.uid,
                         email: user.email,
-                    });
+                    };
+                    dispatch(authActions.login(currentUser));
                 } else {
-                    setIsLoggedIn(false);
+                    dispatch(authActions.logout());
                 }
                 setInit(true);
             });
         }
-
-        return () => {
-            setSawIntro(false);
-        };
-    }, [sawIntro]);
+    }, [dispatch, isSeen]);
 
     const introOut = () => {
-        setSawIntro(true);
-        localStorage.setItem("sawIntro", true);
+        dispatch(introActions.saw());
     };
 
     return (
         <div className="App">
-            {sawIntro ? (
+            {isSeen ? (
                 <>
                     {init ? (
-                        <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} />
+                        <AppRouter />
                     ) : (
                         <div id="App-loading">
                             <CircularProgress />

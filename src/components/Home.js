@@ -1,13 +1,14 @@
 import ReadyItem from "components/ReadyItem";
 import { dbService, firebaseInstance } from "fbase";
 import React, { useEffect, useState } from "react";
-import "../css/Home.css";
-
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-import IntegratedAdfitComponent from "./Adfit";
+import { useDispatch, useSelector } from "react-redux";
+import { getReadyProducts, productsModes } from "Redux-store/products-slice";
+import { useInput } from "hooks/useInput";
+import "../css/Home.css";
 
 const useStyles = makeStyles(() => ({
     enroll: {
@@ -29,46 +30,17 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const Home = ({ addStart, storeCode, editMode, onAddItemToList }) => {
+const Home = ({ mode, storeCode }) => {
     const classes = useStyles();
-    const [item, setItem] = useState("");
-    const [items, setItems] = useState([]);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [findInput, setFindInput] = useState("");
-    console.log("home is rerendered");
+    const [searchInput] = useInput("");
+    const [addInput, resetAddInput] = useInput("");
+    const readyProducts = useSelector((state) => state.products.readyProducts);
+    const dispatch = useDispatch();
     useEffect(() => {
-        const fetchData = async () => {
-            await dbService
-                .collection(storeCode)
-                .doc("Chickens")
-                .onSnapshot((doc) => {
-                    try {
-                        const chickens = doc.data().list;
-                        chickens.sort((a, b) => {
-                            if (a.text > b.text) return 1;
-                            if (a.text < b.text) return -1;
-
-                            return 0;
-                        });
-                        setItems(chickens);
-                    } catch (err) {
-                        console.log(err);
-                    }
-                });
-        };
-        fetchData();
-        return () => {
-            setItems([]);
-        };
-    }, [storeCode]);
-
-    const onChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setItem(value);
-    };
+        dispatch(getReadyProducts(storeCode));
+    }, [dispatch, storeCode]);
 
     const checkInclude = (check, find) => {
         if (check === find) {
@@ -80,11 +52,13 @@ const Home = ({ addStart, storeCode, editMode, onAddItemToList }) => {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        if (item === "") {
+        if (addInput.value === "") {
             setError(true);
             setErrorMessage("제품명을 입력해주세요");
         } else if (
-            !items.map((obj) => checkInclude(obj.text, item)).includes(true)
+            !readyProducts
+                .map((obj) => checkInclude(obj.text, addInput.value))
+                .includes(true)
         ) {
             try {
                 await dbService
@@ -93,61 +67,43 @@ const Home = ({ addStart, storeCode, editMode, onAddItemToList }) => {
                     .update({
                         list: firebaseInstance.firestore.FieldValue.arrayUnion({
                             id: Date.now(),
-                            text: item,
+                            text: addInput.value,
                         }),
                     });
-            } catch {
-                await dbService
-                    .collection(storeCode)
-                    .doc("Chickens")
-                    .set({
-                        list: firebaseInstance.firestore.FieldValue.arrayUnion({
-                            id: Date.now(),
-                            text: item,
-                        }),
-                    });
+                resetAddInput();
+                setErrorMessage("");
+                setError(false);
+            } catch (error) {
+                console.log(error);
             }
-            setItem("");
-            setErrorMessage("");
-            setError(false);
         } else {
             setError(true);
             setErrorMessage("이미 등록된 제품입니다");
         }
     };
 
-    const handleFindInput = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setFindInput(value);
-    };
-
-    const filterFindInput = items.filter((item) => {
-        return item.text.includes(findInput);
+    const filterFindInput = readyProducts.filter((item) => {
+        return item.text.includes(searchInput.value);
     });
 
     return (
         <div className="Home">
             <TextField
                 label="진열가능 제품 검색"
-                onChange={handleFindInput}
-                value={findInput}
+                {...searchInput}
                 inputProps={{ className: classes.searchInput }}
                 className={classes.search}
                 variant="outlined"
             />
-            {editMode || addStart ? (
+            {mode !== productsModes.DEFAULT ? (
                 <div className="Home-NweetList">
-                    {filterFindInput.map((nweet) => (
+                    {filterFindInput.map((product) => (
                         <ReadyItem
-                            key={nweet.id}
-                            editMode={editMode}
-                            addStart={addStart}
-                            itemObj={nweet}
+                            key={product.id}
+                            mode={mode}
+                            itemObj={product}
                             storeCode={storeCode}
-                            chickens={items}
-                            onAddList={onAddItemToList}
+                            chickens={readyProducts}
                         />
                     ))}
                 </div>
@@ -163,8 +119,7 @@ const Home = ({ addStart, storeCode, editMode, onAddItemToList }) => {
                             id="required"
                             label="진열가능 제품 등록"
                             inputProps={{ className: classes.searchInput }}
-                            onChange={onChange}
-                            value={item}
+                            {...addInput}
                             error={error}
                             helperText={errorMessage}
                         />
@@ -177,19 +132,14 @@ const Home = ({ addStart, storeCode, editMode, onAddItemToList }) => {
                             <AddIcon />
                         </Fab>
                     </form>
-                    <div className="Home-Adfit">
-                        <IntegratedAdfitComponent />
-                    </div>
                     <div className="Home-NweetList">
-                        {filterFindInput.map((nweet) => (
+                        {filterFindInput.map((product) => (
                             <ReadyItem
-                                key={nweet.id}
-                                editMode={editMode}
-                                itemObj={nweet}
+                                key={product.id}
+                                itemObj={product}
                                 storeCode={storeCode}
-                                chickens={items}
-                                addStart={addStart}
-                                onAddList={onAddItemToList}
+                                chickens={readyProducts}
+                                mode={mode}
                             />
                         ))}
                     </div>
