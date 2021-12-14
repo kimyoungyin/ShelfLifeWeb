@@ -1,6 +1,7 @@
 import { Button, TextField } from "@material-ui/core";
 import GitHubIcon from "@material-ui/icons/GitHub";
-import React, { useState } from "react";
+import { useInput } from "hooks/useInput";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     authActions,
@@ -9,28 +10,29 @@ import {
     githubLogin,
     googleLogin,
 } from "Redux-store/auth-slice";
+import { errorActions } from "Redux-store/error-slice";
 import "../css/Auth.css";
 
 const Auth = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const { isError, errorMessage } = useSelector((state) => state.error);
     const authMode = useSelector((state) => state.auth.mode);
     const dispatch = useDispatch();
-    const onChange = (event) => {
-        const {
-            target: { name, value },
-        } = event;
-        if (name === "email") {
-            setEmail(value);
-        } else if (name === "password") {
-            setPassword(value);
-        }
-    };
+    const [emailInput] = useInput("");
+    const [passwordInput] = useInput("");
+
+    useEffect(() => {
+        dispatch(errorActions.off());
+    }, [emailInput.value, passwordInput.value]);
 
     const defaultAuthSubmitHandler = (event) => {
         event.preventDefault();
-        dispatch(defaultAuth({ email, password, mode: authMode }));
+        dispatch(
+            defaultAuth({
+                email: emailInput.value,
+                password: passwordInput.value,
+                mode: authMode,
+            })
+        );
     };
 
     const toggleAccount = () => dispatch(authActions.toggleAuthMode());
@@ -52,8 +54,12 @@ const Auth = () => {
                     type="email"
                     name="email"
                     variant="outlined"
-                    onChange={onChange}
-                    value={email}
+                    {...emailInput}
+                    placeholder={
+                        authMode === authModes.SIGNUP
+                            ? "비밀번호를 찾을 떄 쓰이므로, 꼭 유효한 이메일을 작성해주세요"
+                            : ""
+                    }
                     error={isError}
                     required={true}
                 />
@@ -62,8 +68,12 @@ const Auth = () => {
                     type="password"
                     name="password"
                     variant="outlined"
-                    onChange={onChange}
-                    value={password}
+                    {...passwordInput}
+                    placeholder={
+                        authMode === authModes.SIGNUP
+                            ? "8~20자 사이, 특수문자 포함, 공백 없이 입력"
+                            : ""
+                    }
                     error={isError}
                     helperText={errorMessage}
                     required={true}

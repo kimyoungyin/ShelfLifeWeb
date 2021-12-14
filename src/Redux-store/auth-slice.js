@@ -50,6 +50,25 @@ export const authReducer = authSlice.reducer;
 // actions
 export const authActions = authSlice.actions;
 
+const validatePassword = (password) => {
+    if (/[\s]/g.test(password))
+        return {
+            isValid: false,
+            errorMessage: "비밀번호 사이에 공백이 있습니다.",
+        };
+    if (password.length < 8 || password.length > 20)
+        return {
+            isValid: false,
+            errorMessage: "비밀번호의 길이는 8~20자여야 합니다.",
+        };
+    if (/[`~!@#$%^&*|\\\'\";:\/?]/gi.test(password) === false)
+        return {
+            isValid: false,
+            errorMessage: "특수문자가 하나 이상 포함되어야 합니다.",
+        };
+    return { isValid: true, errorMessage: "" };
+};
+
 // action-creator
 export const defaultAuth = ({ email, password, mode }) => {
     return async (dispatch) => {
@@ -61,6 +80,9 @@ export const defaultAuth = ({ email, password, mode }) => {
                     password
                 );
             } else if (mode === authModes.SIGNUP) {
+                let validateObj = validatePassword(password);
+                if (!validateObj.isValid)
+                    return dispatch(errorActions.on(validateObj.errorMessage));
                 data = await authService.createUserWithEmailAndPassword(
                     email,
                     password
