@@ -1,5 +1,5 @@
 import { Button, ButtonGroup } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { authActions } from "Redux-store/auth-slice";
@@ -8,6 +8,7 @@ import "../css/Profile.css";
 
 const Profile = ({ storeCode }) => {
     const userObj = useSelector((state) => state.auth.user);
+    const [isOff, setIsOff] = useState(true);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -21,14 +22,8 @@ const Profile = ({ storeCode }) => {
         navigate("/register");
     };
 
-    const dropDown = () => {
-        const article = document.querySelector(".Profile-article");
-        const off = article.classList.contains("off");
-        if (off === false) {
-            article.classList.add("off");
-        } else {
-            article.classList.remove("off");
-        }
+    const dropDownHandler = () => {
+        setIsOff((prev) => !prev);
     };
     return (
         <div className="Profile">
@@ -52,11 +47,15 @@ const Profile = ({ storeCode }) => {
                     <div className="Profile-border">사용중인 매장코드</div>
                     <div>{storeCode}</div>
                 </div>
-                <Button variant="contained" color="primary" onClick={dropDown}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={dropDownHandler}
+                >
                     사용 가이드
                 </Button>
             </div>
-            <article className="Profile-article off">
+            <article className={`Profile-article ${isOff ? "off" : ""}`}>
                 <article>
                     <h3 className="Profile-question">
                         0. 왜 이 웹을 만들게 되었나요?
