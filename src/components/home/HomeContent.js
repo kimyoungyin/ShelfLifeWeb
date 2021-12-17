@@ -8,7 +8,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { getReadyProducts, productsModes } from "Redux-store/products-slice";
 import { useInput } from "hooks/useInput";
-import "../css/Home.css";
+import "css/Home.css";
 
 const useStyles = makeStyles(() => ({
     enroll: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const Home = ({ mode, storeCode }) => {
+const HomeContent = ({ mode, storeCode }) => {
     const classes = useStyles();
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -149,4 +149,4 @@ const Home = ({ mode, storeCode }) => {
     );
 };
 
-export default React.memo(Home);
+export default React.memo(HomeContent);

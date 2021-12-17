@@ -2,18 +2,18 @@ import React from "react";
 import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import Profile from "routes/Profile";
-import Auth from "./routes/Auth";
-import Navigation from "./components/Navigation";
-import Store from "./routes/Store";
+import Auth from "routes/Auth";
+import Navigation from "components/Navigation";
 import OnSale from "routes/OnSale";
-import MenuBar from "./components/MenuBar";
-import "./css/Router.css";
+import MenuBar from "components/MenuBar";
+import "css/Router.css";
 import { useSelector } from "react-redux";
 import Register from "routes/Register";
 import Confirm from "components/Confirm";
+import Home from "routes/Home";
 
 const routes = [
-    { component: Store, pathname: "/" },
+    { component: Home, pathname: "/" },
     { component: OnSale, pathname: "/onSale" },
     { component: Profile, pathname: "/profile" },
 ];
