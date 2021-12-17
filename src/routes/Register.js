@@ -4,7 +4,7 @@ import { useInput } from "hooks/useInput";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { productsActions } from "Redux-store/products-slice";
-import "../css/Store.css";
+import "css/Store.css";
 
 const Register = ({ storeCode }) => {
     const [storeCodeInput] = useInput(storeCode);

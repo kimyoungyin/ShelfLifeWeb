@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../css/OnSale.css";
+import "css/OnSale.css";
 import SaleItem from "components/SaleItem";
 import { makeStyles, TextField } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";

@@ -2,7 +2,7 @@ import React from "react";
 import Home from "components/Home";
 
 import { Button, ButtonGroup } from "@material-ui/core";
-import "../css/Store.css";
+import "css/Store.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
     productsActions,

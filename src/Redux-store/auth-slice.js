@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { authService, firebaseInstance } from "fbase";
-import { dispatchError, errorActions } from "./error-slice";
+import { dispatchError, errorActions } from "Redux-store/error-slice";
 
 // extract function
 const extractUserObj = (data) => ({

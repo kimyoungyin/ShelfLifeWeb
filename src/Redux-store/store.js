@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authReducer } from "./auth-slice";
-import { errorReducer } from "./error-slice";
-import { introReducer } from "./intro-slice";
-import { navigationReducer } from "./navigation-slice";
-import { productsReducer } from "./products-slice";
+import { authReducer } from "Redux-store/auth-slice";
+import { errorReducer } from "Redux-store/error-slice";
+import { introReducer } from "Redux-store/intro-slice";
+import { navigationReducer } from "Redux-store/navigation-slice";
+import { productsReducer } from "Redux-store/products-slice";
 
 export default configureStore({
     reducer: {

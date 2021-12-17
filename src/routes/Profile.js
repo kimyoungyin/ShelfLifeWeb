@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { authActions } from "Redux-store/auth-slice";
 import { navigationActions } from "Redux-store/navigation-slice";
-import "../css/Profile.css";
+import "css/Profile.css";
 
 const Profile = ({ storeCode }) => {
     const userObj = useSelector((state) => state.auth.user);

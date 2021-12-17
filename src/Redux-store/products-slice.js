@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { dbService, firebaseInstance } from "fbase";
-import { errorActions } from "./error-slice";
+import { errorActions } from "Redux-store/error-slice";
 
 export const productsModes = {
     DEFAULT: "default",

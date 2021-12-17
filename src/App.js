@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AppRouter from "Router";
 import { authService } from "fbase";
 import { CircularProgress } from "@material-ui/core";
-import "./css/App.css";
+import "css/App.css";
 import Intro from "./components/Intro";
 import { useDispatch, useSelector } from "react-redux";
 import { introActions } from "Redux-store/intro-slice";

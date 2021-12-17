@@ -11,7 +11,7 @@ import {
     googleLogin,
 } from "Redux-store/auth-slice";
 import { errorActions } from "Redux-store/error-slice";
-import "../css/Auth.css";
+import "css/Auth.css";
 
 const Auth = () => {
     const { isError, errorMessage } = useSelector((state) => state.error);

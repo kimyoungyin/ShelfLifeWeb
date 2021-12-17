@@ -4,8 +4,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { theme } from "theme";
-import store from "./Redux-store/store";
-import "./css/index.css";
+import store from "Redux-store/store";
+import "css/index.css";
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
