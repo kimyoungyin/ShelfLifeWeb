@@ -1,14 +1,13 @@
 import ReadyItem from "components/ReadyItem";
 import { dbService, firebaseInstance } from "fbase";
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { getReadyProducts, productsModes } from "Redux-store/products-slice";
 import { useInput } from "hooks/useInput";
 import "css/Home.css";
+import { Fab, TextField } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles(() => ({
     enroll: {
@@ -122,6 +121,7 @@ const HomeContent = ({ mode, storeCode }) => {
                             {...addInput}
                             error={error}
                             helperText={errorMessage}
+                            variant="standard"
                         />
                         <Fab
                             size="small"

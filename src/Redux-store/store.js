@@ -3,6 +3,7 @@ import { authReducer } from "Redux-store/auth-slice";
 import { errorReducer } from "Redux-store/error-slice";
 import { introReducer } from "Redux-store/intro-slice";
 import { navigationReducer } from "Redux-store/navigation-slice";
+import { notificationReducer } from "Redux-store/notification-slice";
 import { productsReducer } from "Redux-store/products-slice";
 
 export default configureStore({
@@ -12,5 +13,6 @@ export default configureStore({
         intro: introReducer,
         error: errorReducer,
         products: productsReducer,
+        notification: notificationReducer,
     },
 });

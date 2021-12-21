@@ -1,5 +1,3 @@
-import { Button, TextField } from "@material-ui/core";
-import GitHubIcon from "@material-ui/icons/GitHub";
 import { useInput } from "hooks/useInput";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +9,8 @@ import {
     googleLogin,
 } from "Redux-store/auth-slice";
 import { errorActions } from "Redux-store/error-slice";
+import { Button, TextField } from "@mui/material";
+import GitHubIcon from "@mui/icons-material/GitHub";
 import "css/Auth.css";
 
 const Auth = () => {
@@ -78,15 +78,23 @@ const Auth = () => {
                     helperText={errorMessage}
                     required={true}
                 />
-                <button className="Auth-submit" type="submit">
+                <Button
+                    variant="contained"
+                    className="Auth-submit"
+                    type="submit"
+                >
                     {authMode === authModes.SIGNUP ? "계정 생성" : "로그인하기"}
-                </button>
+                </Button>
             </form>
-            <button className="Auth-toggle" onClick={toggleAccount}>
+            <Button
+                variant="text"
+                className="Auth-toggle"
+                onClick={toggleAccount}
+            >
                 {authMode === authModes.SIGNUP
                     ? "계정이 있어요(로그인)"
                     : "계정이 아직 없어요(회원가입)"}
-            </button>
+            </Button>
             <div className="Auth-social" variant="contained">
                 <Button
                     name="google"

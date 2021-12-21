@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import useGapText from "hooks/useGapText";
 import { useInput } from "hooks/useInput";
 import React from "react";

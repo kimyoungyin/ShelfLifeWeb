@@ -1,10 +1,10 @@
-import { Button, ButtonGroup } from "@material-ui/core";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { authActions } from "Redux-store/auth-slice";
 import { navigationActions } from "Redux-store/navigation-slice";
 import "css/Profile.css";
+import { Button, ButtonGroup } from "@mui/material";
 
 const Profile = ({ storeCode }) => {
     const userObj = useSelector((state) => state.auth.user);
@@ -223,7 +223,7 @@ const Profile = ({ storeCode }) => {
                 </Button>
                 <Button
                     variant="contained"
-                    color="default"
+                    color="inherit"
                     onClick={moveToRegisterHandler}
                 >
                     다른 매장으로 접속

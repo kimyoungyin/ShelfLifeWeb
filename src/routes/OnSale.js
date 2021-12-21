@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "css/OnSale.css";
 import SaleItem from "components/SaleItem";
-import { makeStyles, TextField } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { getSellingProducts } from "Redux-store/products-slice";
 import { useInput } from "hooks/useInput";
+import { TextField } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles(() => ({
     search: {

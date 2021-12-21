@@ -1,11 +1,11 @@
 import React from "react";
-import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
-import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import "../css/Intro.css";
-import { Fab } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { introActions } from "Redux-store/intro-slice";
 import { gifList, gifText, gifTitle } from "assets/code/introData";
+import { Fab } from "@mui/material";
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 const Intro = ({ introOut }) => {
     const currentIndex = useSelector((state) => state.intro.currentIndex);

@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-
-import { makeStyles } from "@material-ui/core/styles";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import PersonIcon from "@material-ui/icons/Person";
-import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
-import AlarmIcon from "@material-ui/icons/Alarm";
-import { LocalConvenienceStore } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { navigationActions } from "Redux-store/navigation-slice";
+import { LocalConvenienceStore } from "@mui/icons-material";
+import PersonIcon from "@mui/icons-material/Person";
+import AlarmIcon from "@mui/icons-material/Alarm";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import { makeStyles } from "@mui/styles";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 
 const useStyles = makeStyles({
     root: {

@@ -1,10 +1,10 @@
-import { Fab } from "@material-ui/core";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import { useInput } from "hooks/useInput";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { productsActions } from "Redux-store/products-slice";
 import "css/Store.css";
+import { Fab } from "@mui/material";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 const Register = ({ storeCode }) => {
     const [storeCodeInput] = useInput(storeCode);

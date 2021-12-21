@@ -1,4 +1,4 @@
-import { Button, ButtonGroup } from "@material-ui/core";
+import { Button, ButtonGroup } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
     productsActions,
