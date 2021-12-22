@@ -9,8 +9,9 @@ import {
     googleLogin,
 } from "Redux-store/auth-slice";
 import { errorActions } from "Redux-store/error-slice";
-import { Button, TextField } from "@mui/material";
+import { Button, Divider, TextField } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import GoogleIcon from "@mui/icons-material/Google";
 import "css/Auth.css";
 
 const Auth = () => {
@@ -95,19 +96,21 @@ const Auth = () => {
                     ? "계정이 있어요(로그인)"
                     : "계정이 아직 없어요(회원가입)"}
             </Button>
+            <Divider>SOCIAL LOGIN</Divider>
             <div className="Auth-social" variant="contained">
                 <Button
                     name="google"
-                    variant="contained"
-                    color="primary"
+                    variant="outlined"
+                    color="black"
                     onClick={socialGoogleAuthHandler}
                 >
-                    구글 계정으로 시작하기
+                    <GoogleIcon />
+                    &nbsp; 구글 계정으로 시작하기
                 </Button>
                 <Button
                     name="github"
                     variant="contained"
-                    color="secondary"
+                    color="black"
                     onClick={socialGithubAuthHandler}
                 >
                     <GitHubIcon />

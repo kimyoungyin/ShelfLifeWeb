@@ -18,6 +18,10 @@ export const theme = createTheme({
         success: {
             main: "#00e676",
         },
+        black: {
+            main: "#24292F",
+            contrastText: "#fff", // text color
+        },
     },
     // typography: {
     //     h2: {
